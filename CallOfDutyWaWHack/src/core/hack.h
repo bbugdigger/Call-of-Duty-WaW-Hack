@@ -28,18 +28,17 @@ public:
 	}
 };
 
+inline uintptr_t dwEntityList = 0x018E7448;
+inline uintptr_t dwLocalPlayer = 0x018ED068;
+inline uintptr_t dwViewMatrix = 0x008e870c;
+
+inline float viewMatrix[16];
+
 class Hack {
 public:
-	uintptr_t dwEntityList	= 0x018E7448;
-	uintptr_t dwLocalPlayer = 0x018ED068;
-	uintptr_t dwViewMatrix	= 0x008e870c;
-
-	float viewMatrix[16];
-
 	void Init();
 	void Update();
-	bool WorldToScreen(vec3 src, vec3 dst, vec3& screen, float fovx, float fovy, float windowWidth, float windowHeight, vec3 left, vec3 up, vec3 forward);
-
+	
 	struct Settings {
 		bool showMenu		= true;
 		bool snaplines		= false;
