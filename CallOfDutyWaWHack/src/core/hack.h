@@ -12,7 +12,7 @@ public:
 		// origin
 		DEFINE_MEMBER_N(Vec3, m_Origin, 0x14);
 		// alive
-		DEFINE_MEMBER_N(int, m_Alive, 0x68);
+		DEFINE_MEMBER_N(int, m_Alive, 0x7C);
 	};
 public:
 	Vec3 GetOrigin() {
@@ -26,6 +26,10 @@ public:
 	int getHealth() {
 		return *(int*)(*(uintptr_t*)this + 0x1C8);
 	}
+
+	Vec3 getHeadPos() {
+		return *(Vec3*)(*(uintptr_t*)this + 0x154);
+	}
 };
 
 inline uintptr_t dwEntityList = 0x018E7448;
@@ -36,6 +40,11 @@ inline float viewMatrix[16];
 
 class Hack {
 public:
+	ID3DXLine* LineL;
+
+	Vec2 crosshair2D;
+	int crosshairSize = 4;
+
 	void Init();
 	void Update();
 	

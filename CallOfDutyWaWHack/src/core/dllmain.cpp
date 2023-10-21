@@ -9,7 +9,8 @@ extern LPDIRECT3DDEVICE9 pDevice = nullptr;
 D3DCOLOR colorRed = D3DCOLOR_ARGB(255, 255, 0, 0);
 
 Hack* hack;
-Vec2 vScreen;
+Vec2 zombieOriginScreen;
+Vec2 zombieHeadScreen;
 
 // hook function
 void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
@@ -33,20 +34,34 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 			continue;
 
 		// snapline
-		//if (WorldToScreen(zombieCords, vScreen, viewMatrix, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN))) {
-		if (WorldToScreen(zombieCords, vScreen, viewMatrix, windowWidth, windowHeight)) {
-			DrawLine(vScreen.x, vScreen.y, windowWidth / 2, windowHeight, 2, colorRed);
+		if (WorldToScreen(zombieCords, zombieOriginScreen, viewMatrix, windowWidth, windowHeight)) {
+			DrawLine(zombieOriginScreen.x, zombieOriginScreen.y, windowWidth / 2, windowHeight, 2, colorRed);
+
+			Vec3 zombieHead = currZombie->getHeadPos();
+			if (WorldToScreen(zombieHead, zombieHeadScreen, viewMatrix, windowWidth, windowHeight)) {
+				DrawEspBox2D(zombieOriginScreen, zombieHeadScreen, 2, colorRed);
+			}
 		}
 	}
 	
 	// crosshair
-	DrawFilledRect(windowWidth / 2 - 2, windowHeight / 2 - 2, 4, 4, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Vec2 l, r, t, b;
+	l = r = t = b = hack->crosshair2D;
+	l.x -= hack->crosshairSize;
+	r.x += hack->crosshairSize;
+	b.y += hack->crosshairSize;
+	t.y -= hack->crosshairSize;
+
+	DrawLine(l, r, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
+	DrawLine(t, b, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	// call og function
 	oEndScene(pDevice);
 }
 
 DWORD WINAPI HackThread(HMODULE hModule) {
+	hack = new Hack();
+
 	// hook
 	if (GetD3D9Device(d3d9Device, sizeof(d3d9Device))) {
 		memcpy(EndSceneBytes, (char*)d3d9Device[42], 7);
