@@ -1,5 +1,7 @@
 #include "includes.h"
 #include <iostream>
+#include <sstream>
+#include <string.h>
 
 // data
 void* d3d9Device[119];
@@ -33,27 +35,65 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		if (currZombie->getHealth() <= 0)
 			continue;
 
-		// snapline
+		
 		if (WorldToScreen(zombieCords, zombieOriginScreen, viewMatrix, windowWidth, windowHeight)) {
-			DrawLine(zombieOriginScreen.x, zombieOriginScreen.y, windowWidth / 2, windowHeight, 2, colorRed);
+
+			// snapline
+			if (hack->settings.snaplines) {
+				DrawLine(zombieOriginScreen.x, zombieOriginScreen.y, windowWidth / 2, windowHeight, 2, colorRed);
+			}
 
 			Vec3 zombieHead = currZombie->getHeadPos();
 			if (WorldToScreen(zombieHead, zombieHeadScreen, viewMatrix, windowWidth, windowHeight)) {
-				DrawEspBox2D(zombieOriginScreen, zombieHeadScreen, 2, colorRed);
+				
+				if (hack->settings.box2D) {
+					DrawEspBox2D(zombieOriginScreen, zombieHeadScreen, 2, colorRed);
+				}
+
+				if (hack->settings.status) {
+					/*int height = ABS(zombieOriginScreen.y - zombieHeadScreen.y);
+					int dX = (zombieOriginScreen.x - zombieHeadScreen.x);
+
+					float healthPerc = currZombie->getHealth() / 100.f;
+
+					Vec2 botHealth, topHealth;
+					int healthHeight = height * healthPerc;
+
+					botHealth.y = zombieOriginScreen.y;
+
+					botHealth.x = zombieOriginScreen.x - (height / 4) - 2;
+
+					topHealth.y = zombieHeadScreen.y + height - healthHeight;
+
+					topHealth.x = zombieOriginScreen.x - (height / 4) - 2 - (dX * healthPerc);
+
+					DrawLine(botHealth, topHealth, 2, D3DCOLOR_ARGB(255, 46, 139, 87));*/
+				}
+
+				if (hack->settings.statusText) {
+					std::stringstream s1;
+					s1 << currZombie->getHealth();
+					std::string t1 = "health: " + s1.str();
+					char* healthMsg = (char*)t1.c_str();
+
+					DrawText(healthMsg, zombieOriginScreen.x, zombieOriginScreen.y, D3DCOLOR_ARGB(255, 255, 255, 255));
+				}
 			}
 		}
 	}
 	
 	// crosshair
-	Vec2 l, r, t, b;
-	l = r = t = b = hack->crosshair2D;
-	l.x -= hack->crosshairSize;
-	r.x += hack->crosshairSize;
-	b.y += hack->crosshairSize;
-	t.y -= hack->crosshairSize;
+	if (hack->settings.rcsCrosshair) {
+		Vec2 l, r, t, b;
+		l = r = t = b = hack->crosshair2D;
+		l.x -= hack->crosshairSize;
+		r.x += hack->crosshairSize;
+		b.y += hack->crosshairSize;
+		t.y -= hack->crosshairSize;
 
-	DrawLine(l, r, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
-	DrawLine(t, b, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
+		DrawLine(l, r, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
+		DrawLine(t, b, 2, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 
 	// call og function
 	oEndScene(pDevice);

@@ -41,19 +41,22 @@ inline float viewMatrix[16];
 class Hack {
 public:
 	ID3DXLine* LineL;
+	ID3DXFont* FontF;
 
 	Vec2 crosshair2D;
 	int crosshairSize = 4;
+
+	~Hack();
 
 	void Init();
 	void Update();
 	
 	struct Settings {
 		bool showMenu		= true;
-		bool snaplines		= false;
-		bool box2D			= false;
+		bool snaplines		= true;
+		bool box2D			= true;
 		bool status			= false;
-		bool statusText		= false;
+		bool statusText		= true;
 		bool rcsCrosshair	= false;
 		bool aimbot			= false;
 		bool points			= false;

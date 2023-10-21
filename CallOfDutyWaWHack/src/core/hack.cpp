@@ -1,5 +1,10 @@
 #include "includes.h"
 
+Hack::~Hack() {
+	this->FontF->Release();
+	this->LineL->Release();
+}
+
 void Hack::Init() {
 }
 
