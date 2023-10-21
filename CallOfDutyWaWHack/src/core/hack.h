@@ -50,15 +50,43 @@ public:
 
 	void Init();
 	void Update();
-	
+
+	void CheckButtons();
+
 	struct Settings {
 		bool showMenu		= true;
-		bool snaplines		= true;
-		bool box2D			= true;
+		bool snaplines		= false;
+		bool box2D			= false;
 		bool status			= false;
-		bool statusText		= true;
+		bool statusText		= false;
 		bool rcsCrosshair	= false;
 		bool aimbot			= false;
 		bool points			= false;
+		bool health			= false;
+		bool ammo			= false;
+		bool grenades		= false;
 	} settings;
+
+	struct Buttons {
+		DWORD showMenuBtn = VK_INSERT;
+		DWORD snaplinesBtn = VK_NUMPAD1;
+		DWORD box2DBtn = VK_NUMPAD2;
+		DWORD status2DBtn = VK_NUMPAD3;
+		DWORD statusTextBtn = VK_NUMPAD4;
+		DWORD rcsCrosshairBtn = VK_NUMPAD5;
+		DWORD pointsBtn = VK_NUMPAD6;
+		DWORD healthBtn = VK_NUMPAD7;
+		DWORD ammoBtn = VK_NUMPAD8;
+		DWORD grenadesBtn = VK_NUMPAD9;
+	} button;
+
+	struct Colors {
+		D3DCOLOR health = D3DCOLOR_ARGB(255, 46, 139, 87);
+		D3DCOLOR blue = D3DCOLOR_ARGB(255, 30, 144, 255);
+		D3DCOLOR white = D3DCOLOR_ARGB(255, 255, 255, 255);
+		struct Zombie {
+			D3DCOLOR esp = D3DCOLOR_ARGB(255, 255, 0, 0);
+			D3DCOLOR snapline = D3DCOLOR_ARGB(255, 255, 0, 0);
+		} zombie;
+	} color;
 };
