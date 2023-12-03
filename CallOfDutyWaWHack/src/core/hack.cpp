@@ -26,5 +26,12 @@ void Hack::CheckButtons() {
 		settings.statusText = !settings.statusText;
 	if (GetAsyncKeyState(button.rcsCrosshairBtn) & 1)
 		settings.rcsCrosshair = !settings.rcsCrosshair;
-
+	if (GetAsyncKeyState(button.pointsBtn) & 1)
+		settings.points = !settings.points;
+	if (GetAsyncKeyState(button.healthBtn) & 1)
+		settings.health = !settings.health;
+	if (GetAsyncKeyState(button.ammoBtn) & 1)
+		settings.ammo = !settings.ammo;
+	if (GetAsyncKeyState(button.grenadesBtn) & 1)
+		settings.grenades = !settings.grenades;
 }

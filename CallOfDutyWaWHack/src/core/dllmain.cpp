@@ -1,4 +1,5 @@
 #include "includes.h"
+#include "../util/memory.h"
 #include <iostream>
 #include <sstream>
 #include <string.h>
@@ -114,6 +115,30 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 
 		DrawLine(l, r, 2, hack->color.white);
 		DrawLine(t, b, 2, hack->color.white);
+	}
+
+	if (hack->settings.points) {
+		memory::Patch((BYTE*)0x018EF124, 50000, 5);
+	}
+
+	if (hack->settings.health) {
+		//memory::Nop((BYTE*)0x004F3458, 6);
+		memory::Nop((BYTE*)0x004F31F4, 6);
+	}
+	else {
+		//memory::Patch((BYTE*)0x004F3458, (BYTE*)"\x89\x8A\x64\x01\x00\x00", 6);
+		memory::Patch((BYTE*)0x004F31F4, (BYTE*)"\x89\x96\xC8\x01\x00\x00", 6);
+	}
+	
+	if (hack->settings.ammo) {
+		memory::Nop((BYTE*)0x0041E619, 7);
+	}
+	else {
+		memory::Patch((BYTE*)0x0041E619, (BYTE*)"\x89\x84\x8F\xFC\x05\x00\x00", 7);
+	}
+
+	if (hack->settings.grenades) {
+		memory::Patch((BYTE*)0x018ED674, 10, 2);
 	}
 
 	// call og function

@@ -50,5 +50,8 @@
     <ClInclude Include="src\core\hack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\util\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
