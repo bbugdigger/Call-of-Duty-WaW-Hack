@@ -35,7 +35,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice) {
 		DrawText("Status Text			(NUMPAD4)", menuOffX, menuOffY + 4 * 12, hack->settings.statusText ? enabled : disabled);
 		DrawText("Recoil crosshair		(NUMPAD5)", menuOffX, menuOffY + 5 * 12, hack->settings.rcsCrosshair ? enabled : disabled);
 		DrawText("Lock points to 50000	(NUMPAD6)", menuOffX, menuOffY + 6 * 12, hack->settings.points ? enabled : disabled);
-		DrawText("Lock health to 10000	(NUMPAD7)", menuOffX, menuOffY + 7 * 12, hack->settings.health ? enabled : disabled);
+		DrawText("Infinite health		(NUMPAD7)", menuOffX, menuOffY + 7 * 12, hack->settings.health ? enabled : disabled);
 		DrawText("Infinite ammo			(NUMPAD8)", menuOffX, menuOffY + 8 * 12, hack->settings.ammo ? enabled : disabled);
 		DrawText("Infinite grenades		(NUMPAD9)", menuOffX, menuOffY + 9 * 12, hack->settings.grenades ? enabled : disabled);
 		DrawText("Hide Menu				(INS)", menuOffX, menuOffY + 10 * 12, D3DCOLOR_ARGB(255, 255, 255, 255));
