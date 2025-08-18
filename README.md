@@ -10,3 +10,7 @@ When you have finally started the game with zombies run the command:
 That's it! You should now see the hack menu pop up in the game.
 
 ![Game Hack Screenshot](https://github.com/realbugdigger/Call-of-Duty-WaW-Hack/blob/master/images/codwaw_ss1.png)
+
+***
+
+discord info: sriroyal
